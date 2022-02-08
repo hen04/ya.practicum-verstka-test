@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <!-- Надо исправить: Здесь стоит запрет на использование зума в телефоне. Когда текст очень маленький на
+  сайте, полезно использовать зум  -->
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="author" content="">
+  <meta name="description" content="Articles saver">
+  <title>Explorer</title>
+  <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.main.css %>">
+  <link rel="icon" href="<%= require('./images/favicon.png')%>" type="image/png">
+</head>
+
+<body>
+<div class="root__section">
+  <!-- Надо исправить: неверное именование, можно почитать здесь об именовании классов по БЭМ: https://ru.bem.info/methodology/naming-convention/ -->
+  <header class="header">
+    <div class="menu">
+      <!-- Пример замечания:
+        Отлично: использование ссылки для логотипа - правильное решение!
+      -->
+      <a href="./" class="menu__logo">Explorer</a>
+      <!-- Пример замечания:
+        Надо исправить: элемент управления отображением мобильного меню
+        должен быть кнопкой - тег button, а не div, т.к. пользователь может
+        взаимодействовать с этим элементов
+      -->
+      <div class="menu__mobile" id="mobile-menu"></div>
+      <!-- Надо исправить: см. коммент выше, лучше сделать кнопкой     -->
+      <div class="menu__items-list">
+        <!-- Надо исправить: не хватает тега навигации -->
+        <a href="./" class="menu__link menu__link_selected">Главная</a>
+        <div class="menu__items-single-item">
+            <span class="menu__link menu__link--logged">Юзер
+              <span class="menu__logout"></span>
+              <!-- Надо исправить: здесь нужна иконка входа, иконка выхода нужна будет, когда написано имя пользователя -->
+            </span>
+            <!-- Надо исправить: не сверстан вариант, когда пользователь залогинен -->
+        </div>
+      </div>
+    </div>
+    <div class="header__title-wrapper">
+      <h1 class="header__title">Что в мире творится?</h1>
+      <p class="header__subtitle">
+        <b>Находите самые свежие статьи на любую тему
+          и сохраняйте в своём личном кабинете.</b>
+        <!-- Можно лучше: если нужно выделить эту фразу, можно использовать семантический тег. -->
+      </p>
+      <div class="header__form">
+        <input class="header__form-input" type="text" name="search" placeholder="Введите тему новости" required/>
+        <span class="button header__button">Искать</span>
+        <!-- Надо исправить: нет тега для формы, кнопка должна быть реализована с помощь кнопки или инпута. Для поиска так же есть подходящий тип у инпута. -->
+      </div>
+    </div>
+  </header>
+  <section class=preloader>
+    <div class="preloader__message" id="preloader-searching">
+      <i class="circle-preloader"></i>
+      <h5 class="preloader__subtitle">Идет поиск новостей...</h5>
+      <!-- Можно лучше: я бы не использовала здесь заголовок, лучше подойдет параграф     -->
+    </div>
+    <div class="preloader__message preloader__hide" id="preloader-not-found">
+      <img class="preloader__icon" src="<%= require('./images/not-found.svg')%>" alt="no">
+      <h5 class="preloader__title">Ничего не найдено</h5>
+      <h4 class="preloader__subtitle">К сожалению по вашему запросу ничего не найдено.</h4>
+      <!-- Можно лучше: это визуально заголовки, но семантически не совсем верно. Лучше использовать параграф с классами  -->
+    </div>
+  </section>
+  <main class="results">
+    <h3 class="results__title">Результаты поиска</h3>
+    <div class="results__news">
+      <!-- Отличный выбор для верстки этого блока: гриды!    -->
+      <a href="#" class="card">
+        <div class="card__body">
+          <div class="card_image-wrapper">
+            <div class="card_img"></div>
+            <!-- Надо исправить: в этом случае лучше использовать другой тег, так как используется контентное изображение,
+            а не декоративная картинка. Так же есть проблема в именовании классов, это не модификатор, а элемент. -->
+          </div>
+          <div class="card__icon"></div>
+          <!-- Отлично: здесь правильное именование -- согласно БЭМ.
+               Надо исправить: Не хватает стилей для позиционирования иконки -->
+          <p class="card__warning">Войдите, чтобы сохранять статьи</p>
+          <div class="card_wrapper">
+            <!-- Пример замечания:
+              Можно лучше: для дат существует специальный тег <time>.
+              Этот элемент предназначен для представления дат и времени в машиночитаемом формате.
+              Это облегчает клиентским приложениям добавление событий в календарь пользователя.
+              Более подробно о данном теге и об его использовании вы можете узнать здесь:
+              https://developer.mozilla.org/ru/docs/Web/HTML/Element/time
+            -->
+            <p class="card_date">2 августа, 2019</p>
+            <h4 class="card_title">Why do we use it?</h4>
+            <div class="card_text">It is a long established fact that a reader will be distracted by the readable content
+              of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+              distribution of letters, as opposed to using 'Content here, content here', making it look like readable
+              English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model
+              text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions
+              have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+            </div>
+          </div>
+        </div>
+        <p class="card_src">lipsum.com</p>
+      </a>
+      <a href="#" class="card">
+        <div class="card__body">
+          <div class="card_image-wrapper">
+            <div class="card_img"></div>
+          </div>
+          <div class="card__icon"></div>
+          <p class="card__warning">Войдите, чтобы сохранять статьи</p>
+          <div class="card_wrapper">
+            <p class="card_date">2 августа, 2019</p>
+            <h4 class="card_title">Why do we use it?</h4>
+            <div class="card_text">It is a long established fact that a reader will be distracted by the readable content
+              of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+              distribution of letters, as opposed to using 'Content here, content here', making it look like readable
+              English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model
+              text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions
+              have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+            </div>
+          </div>
+        </div>
+        <p class="card_src">lipsum.com</p>
+      </a>
+      <a href="#" class="card">
+        <div class="card__body">
+          <div class="card_image-wrapper">
+            <div class="card_img"></div>
+          </div>
+          <div class="card__icon"></div>
+          <p class="card__warning">Войдите, чтобы сохранять статьи</p>
+          <div class="card_wrapper">
+            <p class="card_date">2 августа, 2019</p>
+            <h4 class="card_title">Why do we use it?</h4>
+            <div class="card_text">It is a long established fact that a reader will be distracted by the readable content
+              of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+              distribution of letters, as opposed to using 'Content here, content here', making it look like readable
+              English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model
+              text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions
+              have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+            </div>
+          </div>
+        </div>
+        <p class="card_src">lipsum.com</p>
+      </a>
+      <a href="#" class="card">
+        <div class="card__body">
+          <div class="card_image-wrapper">
+            <div class="card_img"></div>
+          </div>
+          <div class="card__icon card__icon_marked"></div>
+          <p class="card__warning">Войдите, чтобы сохранять статьи</p>
+          <div class="card_wrapper">
+            <p class="card_date">2 августа, 2019</p>
+            <h4 class="card_title">Why do we use it?</h4>
+            <div class="card_text">It is a long established fact that a reader will be distracted by the readable content
+              of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+              distribution of letters, as opposed to using 'Content here, content here', making it look like readable
+              English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model
+              text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions
+              have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+            </div>
+          </div>
+        </div>
+        <p class="card_src">lipsum.com</p>
+      </a>
+    </div>
+    <button class="button results__button">Показать еще</button>
+  </main>
+  <section class="about results__about">
+      <!-- Надо исправить: здесь не по БЭМ. Можно использовать модификатор блока, но не модификатор элемента   -->
+      <h3 class="about__title">Об авторе</h3>
+      <div class="about__text">
+        <!-- Можно лучше: здесь и ниже лучше подойдет параграф -->
+        Vivamus sed volutpat odio. Praesent placerat gravida erat, in ornare ex. <br/> Nullam vitae tellus euismod, egestas
+        diam vel, maximus orci. Nulla fringilla, enim ut pharetra rhoncus, arcu enim aliquet turpis, ac tempus dolor
+        lacus a velit. Donec semper velit eu volutpat bibendum. <br/> In ultricies dolor quis neque pellentesque pharetra.
+        Donec nibh urna, suscipit in feugiat at, facilisis et turpis. Fusce blandit tincidunt libero, sed ornare sapien
+        tincidunt nec. Curabitur quis fermentum felis.
+      </div>
+      <div class="about__text">
+        Quisque urna magna, molestie id nisl vitae, bibendum auctor sem. <br/> Aliquam efficitur orci elit, lacinia fringilla
+        nibh aliquet non. Morbi consectetur tincidunt dui in rhoncus. Vestibulum imperdiet luctus sodales. Class aptent
+        taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed vitae tincidunt sem.
+      </div>
+  </section>
+  <footer class="footer">
+    <p class="footer__legal">© 2019</p>
+    <!-- Можно лучше: значок копирайта можно использовать такой: &copy;    -->
+    <ul class="footer__menu">
+      <li class="footer__menu-item"><a href="./">Главная</a></li>
+      <li class="footer__menu-item"><a href="./about/">О проекте</a></li>
+      <!-- Можно лучше: так как страницы about пока нет на сайте, лучше поставить в href="#", чтобы не вводить пользователя в заблуждение -->
+      <li class="footer__menu-item"><a href="https://praktikum.yandex.ru" target="_blank">Яндекс.Практикум</a></li>
+    </ul>
+    <p class="footer__links">
+      <a href="#" class="footer__social-icon" target="_blank">
+        <img src="<%= require('./images/social/git.svg')%>" alt="Logo">
+        <!-- Надо исправить: укажите размеры изображений, тогда браузер зарезервирует для них места и страница не будет скакать при загрузке контента. -->
+      </a> <br>
+      <!-- Надо исправить: тег <br> лучше не использовать, если нужно сделать перенос на другую строчку, лучше использовать стили -->
+      <a href="#" class="footer__social-icon" target="_blank">
+        <img src="<%= require('./images/social/facebook.svg')%>" alt="Logo">
+      </a> <br>
+    </p>
+  </footer>
+</div>
+<div id="modal">
+  <section class="auth-form__wrapper_hide" id="login-form">
+    <!-- Надо исправить: нарушение БЭМ  -->
+    <form class="auth-form">
+      <!-- Надо исправить: не хватает важных атрибутов для формы. Про тег form есть хорошая статья тут: https://doka.guide/html/form/     -->
+      <div class="auth-form__close" id="close-login-form"></div>
+      <h4 class="auth-form__title">Вход</h4>
+      <span class="auth-form__subtitle">E-mail</span>
+      <!-- Надо исправить: вместо span здесь хорошо подойдет другой тег, его можно привязать к инпуту с помощью атрибута for  -->
+      <input class="auth-form__input" type="email" placeholder="Введите почту" required>
+      <!-- Можно лучше: хорошо бы указать id для инпута, чтобы связать его с лейблом.      -->
+      <span class="auth-form__error-message" id="error-email-login">
+          Введите корректный email!
+        </span>
+      <span class="auth-form__subtitle">Пароль</span>
+      <input class="auth-form__input" type="password" placeholder="Введите пароль" required>
+      <span class="auth-form__error-message auth-form__error-message_hide" id="error-password-login">
+          Поле не может быть пустым!
+        </span>
+      <span class="auth-form__error-message auth-form__error-message_usr-exists" id="error-not-logged">
+          Неправильный логин или пароль
+        </span>
+      <button class="button auth-form__button" name="login-button" type="submit" disabled>Войти</button>
+      <span class="auth-form__other-action">
+          или <span class="auth-form__other-action-click" id="open-signup-form">Зарегистрироваться</span>
+        </span>
+    </form>
+  </section>
+
+  <section class="auth-form__wrapper_hide" id="signup-form">
+    <form class="auth-form">
+      <div class="auth-form__close" id="close-signup-form"></div>
+      <h4 class="auth-form__title">Регистрация</h4>
+      <span class="auth-form__subtitle">E-mail</span>
+      <input class="auth-form__input" name="email" placeholder="Введите почту" type="email" required>
+      <span class="auth-form__error-message auth-form__error-message_hide" id="error-email">Введите корректный email!</span>
+      <span class="auth-form__subtitle">Пароль</span>
+      <input class="auth-form__input" type="password" placeholder="Введите пароль" minlength="8"
+             required>
+      <span class="auth-form__error-message" id="error-password">
+          Длина пароля должна быть 8 или более символов
+        </span>
+      <span class="auth-form__subtitle">Имя</span>
+      <input class="auth-form__input" placeholder="Введите свое имя" required minlength="2">
+      <span class="auth-form__error-message auth-form__error-message_hide" id="error-name">
+          Введите имя!
+        </span>
+      <span class="auth-form__error-message auth-form__error-message_usr-exists" id="error-register">
+          Такой пользователь уже есть
+        </span>
+      <button class="button auth-form__button" type="submit">Зарегистрироваться</button>
+      <span class="auth-form__other-action">
+          или <span class="auth-form__other-action-click" id="open-login-form">Войти</span>
+        </span>
+    </form>
+  </section>
+
+  <section class="auth-form__wrapper_hide" id="signup-ok">
+    <form class="auth-form">
+      <!-- Надо исправить: тег form не нужен, так как ничего не отправляется на сервер      -->
+      <div class="auth-form__close" id="close-signup-ok-form"></div>
+      <h4 class="auth-form__title">Пользователь успешно зарегистрирован!</h4>
+      <span class="auth-form__other-action auth-form__other-action_left">
+          <span class="auth-form__other-action-click" id="open-login-modal">Выполнить вход</span>
+          <!-- Надо исправить: здесь правильней использовать кнопку, так как будет происходить смена модалки         -->
+        </span>
+    </form>
+  </section>
+
+  <div class="overlay"></div>
+</div>
+<script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
+</body>
+</html>
